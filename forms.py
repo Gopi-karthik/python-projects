@@ -1,0 +1,32 @@
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, PasswordField
+from wtforms.form import Form
+from wtforms.validators import DataRequired, URL,Email
+from flask_ckeditor import CKEditorField
+from flask_login import UserMixin
+
+##WTForm
+class CreatePostForm(FlaskForm):
+    title = StringField("Blog Post Title", validators=[DataRequired()])
+    subtitle = StringField("Subtitle", validators=[DataRequired()])
+    img_url = StringField("Blog Image URL", validators=[DataRequired(), URL()])
+    body = CKEditorField("Blog Content", validators=[DataRequired()])
+    submit = SubmitField("Submit Post")
+
+class RegisterForm(FlaskForm,UserMixin):
+    email=StringField('Email',validators=[DataRequired(), Email("This field requires a valid email address")])
+
+    name=StringField('Name',validators=[DataRequired()])
+    password=PasswordField('Password',validators=[DataRequired()])
+    submit=SubmitField('Register')
+
+
+class LoginForm(FlaskForm,UserMixin):
+
+    email=StringField('Email',validators=[DataRequired(), Email("This field requires a valid email address")])
+    password=PasswordField('Password',validators=[DataRequired()])
+    submit=SubmitField('Let ME In')
+
+class CommentForm(FlaskForm,UserMixin):
+    comment=CKEditorField('Comment',validators=[DataRequired()])
+    submit=SubmitField('Submit comment')
